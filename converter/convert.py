@@ -376,6 +376,8 @@ def clean_query(query):
     #     constants.DECIMAL_SEPARATOR_REPLACEMENT, query)
     # query = constants.PARTIAL_DECIMAL_SEPARATOR_RE.sub(
     #     constants.PARTIAL_DECIMAL_SEPARATOR_REPLACEMENT, query)
+    query = constants.THOUSANDS_SEPARATOR_RE.sub(
+        constants.THOUSANDS_SEPARATOR_REPLACEMENT, query)
     query = query.replace('$', '')
     query = constants.FUNCTION_ALIASES_RE.sub(
         constants.FUNCTION_ALIASES_REPLACEMENT, query

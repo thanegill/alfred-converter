@@ -6,6 +6,7 @@ UNITS_PICKLE_FILE = 'units.pickle'
 
 OUTPUT_DECIMALS = 6
 DECIMAL_SEPARATOR = os.environ.get('DECIMAL_SEPARATOR') or '.'
+THOUSANDS_SEPARATOR = os.environ.get('THOUSANDS_SEPARATOR') or ','
 
 SOURCE_PATTERN = r'^(?P<quantity>.*[\d.]+)\s*(?P<from>[^\d\s]([^\s]*|.+?))'
 SOURCE_RE = re.compile(SOURCE_PATTERN + '$', re.IGNORECASE | re.VERBOSE)
@@ -18,6 +19,10 @@ FULL_RE = re.compile(
 DECIMAL_SEPARATOR_RE = re.compile(
     r'(?!\(\s*)(\d+)' + DECIMAL_SEPARATOR + r'(\d+)')
 DECIMAL_SEPARATOR_REPLACEMENT = r'\1.\2'
+
+THOUSANDS_SEPARATOR_RE = re.compile(
+    r'(\b\d{1,3})' + THOUSANDS_SEPARATOR + r'(?=\d{3}(\D|$))')
+THOUSANDS_SEPARATOR_REPLACEMENT = r'\1'
 
 PARTIAL_DECIMAL_SEPARATOR_RE = re.compile(
     r'^' + DECIMAL_SEPARATOR + r'(\d+)')
