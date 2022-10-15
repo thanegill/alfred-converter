@@ -1,3 +1,5 @@
 units.pickle
 .DS_Store
 .idea
+.mypy_cache
+.coverage
