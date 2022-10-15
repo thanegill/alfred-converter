@@ -33,7 +33,7 @@ DECIMAL_EXPRESSIONS = {
 }
 
 
-@pytest.mark.parametrize('test', EXPRESSIONS.items())
+@pytest.mark.parametrize('test', list(EXPRESSIONS.items()))
 def test_working(test, monkeypatch):
     monkeypatch.setenv('UNITS_SIDE', 'left')
     # Remove comments if needed
@@ -49,7 +49,7 @@ def test_working(test, monkeypatch):
         if result['title'] == expected_result:
             return True
         else:
-            print('%r != %r' % (expected_result, result['title']))
+            print(('%r != %r' % (expected_result, result['title'])))
 
     if result:
         raise RuntimeError(
@@ -62,7 +62,7 @@ def test_working(test, monkeypatch):
         )
 
 
-@pytest.mark.parametrize('test', DECIMAL_EXPRESSIONS.items())
+@pytest.mark.parametrize('test', list(DECIMAL_EXPRESSIONS.items()))
 def test_decimal_separator(test, monkeypatch):
     monkeypatch.setenv('UNITS_SIDE', 'left')
     monkeypatch.setattr(constants, 'DECIMAL_SEPARATOR', ',')
@@ -72,16 +72,16 @@ def test_decimal_separator(test, monkeypatch):
 
     units = convert.Units()
     units.load(constants.UNITS_XML_FILE)
-    print 'sep', constants.DECIMAL_SEPARATOR, expression
+    print('sep', constants.DECIMAL_SEPARATOR, expression)
 
     # Execute the expression
     result = None
     for result in convert.main(units, expression, dict):
-        print('result', result)
+        print(('result', result))
         if result['title'] == expected_result:
             return True
         else:
-            print('%r != %r' % (expected_result, result['title']))
+            print(('%r != %r' % (expected_result, result['title'])))
 
     if result:
         raise RuntimeError(

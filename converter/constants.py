@@ -115,11 +115,11 @@ NAME_BLACKLIST = {
 }
 
 
-for annotation, items in ANNOTATION_REPLACEMENTS.items():
+for annotation, items in list(ANNOTATION_REPLACEMENTS.items()):
     items = set(items)
     items.add(annotation)
 
-    for key, expansions in EXPANSIONS.items():
+    for key, expansions in list(EXPANSIONS.items()):
         for expansion in expansions:
             for item in set(items):
                 items.add(item.replace(key, expansion))

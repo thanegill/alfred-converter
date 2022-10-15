@@ -1,16 +1,13 @@
-#!/usr/bin/python
 '''
 Note that we are _explicityly_ using the system python so we don't rely on
 custom libraries and/or versions
 '''
-from __future__ import print_function
 import os
 import collections
 import decimal
 import functools
 import fractions
-import constants
-import safe_math
+from . import constants, safe_math
 
 
 infinity = decimal.Decimal('inf')
@@ -150,7 +147,7 @@ class Units(object):
         unit.register(self)
 
     def load(self, xml_file):
-        import extra_units
+        from . import extra_units
 
         extra_units.register_pre(self)
 
@@ -263,7 +260,7 @@ class Unit(object):
         self.fractional = fractional
         self.split = split
 
-        for k, vs in constants.ANNOTATION_REPLACEMENTS.items():
+        for k, vs in list(constants.ANNOTATION_REPLACEMENTS.items()):
             if k in name:
                 for v in vs:
                     annotations.append(name.replace(k, v))
@@ -293,7 +290,7 @@ class Unit(object):
         data.update(kwargs)
         data['id'] = id
         data['name'] = kwargs.get('name', id)
-        data['conversion_params'] = map(str, conversion_params)
+        data['conversion_params'] = list(map(str, conversion_params))
         return Unit(**data)
 
     def get_icon(self):
@@ -302,7 +299,7 @@ class Unit(object):
                 return get_color_prefix() + constants.ICONS[quantity_type]
 
     def to_base(self, value):
-        a, b, c, d = map(decimal.Decimal, self.conversion_params)
+        a, b, c, d = list(map(decimal.Decimal, self.conversion_params))
         if self.fractional:
             assert not a and not d, 'Fractional units cannot use A and D'
             fraction = fractions.Fraction(b) / fractions.Fraction(c)
@@ -312,7 +309,7 @@ class Unit(object):
             return (a + b * value) / (c + d * value)
 
     def from_base(self, value):
-        a, b, c, d = map(decimal.Decimal, self.conversion_params)
+        a, b, c, d = list(map(decimal.Decimal, self.conversion_params))
         if self.fractional:
             assert not a and not d, 'Fractional units cannot use A and D'
             fraction = fractions.Fraction(c) / fractions.Fraction(b)

@@ -2,7 +2,7 @@ import re
 import math
 import decimal
 import functools
-import constants
+from . import constants
 
 
 safe_dict = dict()
@@ -57,9 +57,9 @@ def exp(x):
     >>> print(exp(decimal.Decimal(2)))
     7.389056098930650227230427461
     >>> print(exp(2.0))
-    7.38905609893
+    7.389056098930649
     >>> print(exp(2+0j))
-    (7.38905609893+0j)
+    (7.389056098930649+0j)
 
     """
     decimal.getcontext().prec += 2
@@ -83,9 +83,9 @@ def cos(x):
     >>> print(cos(decimal.Decimal('0.5')))
     0.8775825618903727161162815826
     >>> print(cos(0.5))
-    0.87758256189
+    0.8775825618903728
     >>> print(cos(0.5+0j))
-    (0.87758256189+0j)
+    (0.8775825618903728+0j)
 
     """
     decimal.getcontext().prec += 2
@@ -110,9 +110,9 @@ def sin(x):
     >>> print(sin(decimal.Decimal('0.5')))
     0.4794255386042030002732879352
     >>> print(sin(0.5))
-    0.479425538604
+    0.479425538604203
     >>> print(sin(0.5+0j))
-    (0.479425538604+0j)
+    (0.479425538604203+0j)
 
     """
     decimal.getcontext().prec += 2
@@ -210,7 +210,7 @@ def safe_eval(query):
     query = fix_partial_queries(query)
     query = fix_parentheses(query)
 
-    for k, v in constants.PRE_EVAL_REPLACEMENTS.items():
+    for k, v in list(constants.PRE_EVAL_REPLACEMENTS.items()):
         query = query.replace(k, v)
 
     context = safe_dict.copy()

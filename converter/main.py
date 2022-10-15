@@ -1,8 +1,6 @@
-#!/usr/bin/env python3
-from __future__ import print_function
 import os
 import sys
-import constants
+from . import constants
 import functools
 from xml.etree import cElementTree as ET
 
@@ -17,7 +15,7 @@ def create_item(parent, attrib={}, **kwargs):
         attrib[k] = str(attrib[k])
 
     item = ET.SubElement(parent, 'item', attrib)
-    for k, v in kwargs.items():
+    for k, v in list(kwargs.items()):
         elem = ET.SubElement(item, k)
         elem.text = str(v)
 
@@ -81,7 +79,7 @@ def to_xml(f):
 
 @to_xml
 def scriptfilter(items, query):
-    import convert
+    from . import convert
     import pickle
 
     try:

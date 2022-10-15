@@ -1,7 +1,7 @@
 # The poscUnits22.xml file is missing a few units which would be quite useful
 # This allows you to add additional units to the list.
 
-import convert
+from . import convert
 import decimal
 
 
@@ -29,7 +29,7 @@ def register_post(units):
         ),
     }
 
-    for base, exponents in exponents.items():
+    for base, exponents in list(exponents.items()):
         for exponent, prefix, full_prefix in exponents:
             multiplier = base ** exponent
 
@@ -93,7 +93,7 @@ def register_post(units):
         ('nano', 'n'): decimal.Decimal('1e-9'),
     }
     farad = units.get('farad')
-    for prefixes, multiplier in prefixes.items():
+    for prefixes, multiplier in list(prefixes.items()):
         id = prefixes[1] + farad.id
         name = prefixes[0] + farad.name
 
